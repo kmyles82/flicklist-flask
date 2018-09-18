@@ -38,7 +38,9 @@ add_form = """
 
 # a form for crossing off watched movies
 crossoff_form = """
-
+    <form action='/crossoff' method='POST'>
+        I want to cross off <select id='movie'>crossoff_movie()</select> from my Watchlist.
+    </form>
 """
 
 # TODO:
@@ -46,8 +48,16 @@ crossoff_form = """
 # "Star Wars has been crossed off your watchlist".
 # And create a route above the function definition to receive and handle the request from 
 # your crossoff_form.
+@app.route("/crossoff", methods=['POST'])
 def crossoff_movie():
-    crossed_off_movie = request.form['crossed-off-movie']    
+    crossed_off_movie = request.form['movie']
+
+    new_element = ""
+
+    for movie in crossed_off_movie.keys():
+        new_element += "<option>{value}</option>".format(value=crossed_off_movie[movie])
+
+    return new_element
 
 # TODO:
 # modify the crossoff_form above to use a dropdown (<select>) instead of
